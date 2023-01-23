@@ -29,8 +29,6 @@ class MyGame:
         self.player_1 = player_1
         self.player_2 = player_2
         self.liste_player = [self.player_1, self.player_2]
-        self.player_1_win = False
-        self.player_2_win = False
         self._start_game()
 
     def _verify_nb_allumette(self, grille):
