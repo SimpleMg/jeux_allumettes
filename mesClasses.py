@@ -5,8 +5,8 @@ class Ia:
 
     def _calcul_congruence(self, nombre_allumette) -> int:
         """
-        a ≡ b[n] <=> n / b-a
-        b = nk + a
+        a ≡ b[n]
+        b = nk + a 
         """
         if (nombre_allumette % 4) == (1 % 4):
             return 4
