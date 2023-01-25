@@ -1,46 +1,44 @@
-import re
-
-
 class Ia:
     def __init__(self):
         self.pseudo = "Vincent Freeman"
-        self.cas_fin = {1: 1, 2: 1, 3: 2}
+        self.cas_fin = {1: 1, 2: 1, 3: 2, 4: 3, 5: 4, 6: 1}
 
-    def _calcul_congruence(self, nbAllumette) -> int:
+    def _calcul_congruence(self, nombre_allumette) -> int:
         """
         a ≡ b[n] <=> n / b-a
         b = nk + a
         """
-        if (nbAllumette % 4) == (1 % 4):
+        if (nombre_allumette % 4) == (1 % 4):
             return 4
-        return False
+        return 0
+
+    def _supp_espace(self, chaine_str):
+        return "".join(chaine_str.split())
 
     def choix_nb_allumette(self, grille):
-        if (y := len(grille)) in self.cas_fin:
-            choice_nb_allumette = self.cas_fin[y]
+        if (len_grille := len(grille)) in self.cas_fin:
+            choice_nombre_allumette = self.cas_fin[len_grille]
         else:
-            choice_nb_allumette = self._calcul_congruence(len(grille))
-            if not choice_nb_allumette:
+            choice_nombre_allumette = self._calcul_congruence(len(grille))
+            if choice_nombre_allumette == 0:
                 with open('cerveau.txt', 'r') as f:
                     plus_commun = 0
                     dernier_ajout = 0
-                    d = re.sub(r"\s+", "", f.read())
-                    for i in d:
-                        if d.count(i) > plus_commun:
+                    chaine_sans_espace = self._supp_espace(f.read())
+                    for i in chaine_sans_espace:
+                        if chaine_sans_espace.count(i) > plus_commun:
                             plus_commun = int(i)
                         dernier_ajout = int(i)
-                choice_nb_allumette = plus_commun
+                choice_nombre_allumette = plus_commun
                 cpt = 1
-                while ((len(grille) - choice_nb_allumette) % 4) != (1 % 4):
-                    if choice_nb_allumette >= 3:
-                        choice_nb_allumette = dernier_ajout
+                while ((len(grille) - choice_nombre_allumette) % 4) != (1 % 4):
+                    if choice_nombre_allumette > 4:
+                        choice_nombre_allumette = dernier_ajout
                         break
-                    choice_nb_allumette += cpt
+                    choice_nombre_allumette += cpt
                     cpt += 1
-            if (len(grille) - choice_nb_allumette) == 5:
-                choice_nb_allumette -= 1
-            print(choice_nb_allumette)
-        return choice_nb_allumette
+        print(choice_nombre_allumette)
+        return choice_nombre_allumette
 
     def choix_allumette(self):
         print("L'\IA {} choisis une allumette".format(self.pseudo))
